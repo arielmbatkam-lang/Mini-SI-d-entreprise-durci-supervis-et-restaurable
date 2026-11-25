@@ -1,0 +1,15 @@
+#information a modifie ***********
+pveam update
+TPL=$(pveam available --section system | awk '/debian-12-standard(*****)/ {print $2}' | sort -V | tail -1)
+pveam download local "$TPL"
+
+pct create 110 local:vztmpl/$TPL \
+  --hostname nom du host ******\
+  --cores 2 --memory 2048 --swap 512 \
+  --rootfs local-lvm:16***** \
+  --unprivileged 1 --features nesting=1 \
+  --net0 name=*******,bridge=****,tag=10(****),ip=*****/****,gw=********* \
+  --nameserver 9.9.9.9 \
+  --password '**********' \
+  --onboot 1
+pct start 110
